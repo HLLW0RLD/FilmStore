@@ -53,7 +53,6 @@ class ListFragment : Fragment() {
         when(data) {
             is AppState.Success -> {
                 val filmData = data.filmData
-                binding.loadingLayout.visability = view.GONE
             }
         }
     }
