@@ -12,7 +12,9 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.filmstore.R
 import com.example.filmstore.databinding.FragmentListBinding
 import com.example.filmstore.model.AppState
+import com.example.filmstore.model.Film
 import com.example.filmstore.viewmodel.MainViewModel
+import kotlinx.android.synthetic.main.item_film.*
 
 class ListFragment : Fragment() {
     
@@ -54,6 +56,13 @@ class ListFragment : Fragment() {
             is AppState.Success -> {
                 val filmData = data.filmData
             }
+        }
+    }
+
+    private fun setData(filmData: Film){
+        with(binding){
+            name.text = filmData.name
+            rating.text = filmData.rating.toString()
         }
     }
 }
