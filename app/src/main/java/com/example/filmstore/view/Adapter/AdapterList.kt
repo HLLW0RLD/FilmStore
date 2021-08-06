@@ -1,15 +1,15 @@
-package com.example.filmstore.view
+package com.example.filmstore.view.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.filmstore.databinding.ItemFilmBinding
 import com.example.filmstore.model.Film
+import com.example.filmstore.model.repository.RepositoryImpl
 
-class AdapterList :
-    RecyclerView.Adapter<AdapterList.MainViewHolder>() {
+class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>() {
 
-    private var filmData: List<Film> = listOf()
+    private var filmData: List<Film> = RepositoryImpl().getAllFilms()
     private var onItemViewClickListener: (Film) -> Unit = {}
 
     fun setOnItemViewClickListener(onItemViewClickListener: (Film) -> Unit){

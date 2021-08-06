@@ -35,6 +35,18 @@
         android:background="#6A027C"
         app:layout_constraintTop_toBottomOf="@+id/best_title"/>
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/RecyclerView_best"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/recyclerViewMargin"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@+id/all_title"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/line1"
+        app:layout_constraintTop_toBottomOf="@+id/line1"
+        tools:listitem="@layout/item_film" />
 
     <TextView
         android:id="@+id/all_title"
@@ -44,7 +56,7 @@
         android:text="All Films"
         android:textSize="@dimen/list_title_size"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line1" />
+        app:layout_constraintTop_toBottomOf="@+id/RecyclerView_best" />
 
     <View
         android:id="@+id/line2"
@@ -54,13 +66,17 @@
         app:layout_constraintTop_toBottomOf="@+id/all_title"/>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/RecyclerViewList"
-        android:background="#000000"
+        android:id="@+id/RecyclerView_list"
         android:layout_width="match_parent"
-        android:layout_height="525dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/recyclerViewMargin"
+        android:background="#000000"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line2"
+        app:layout_constraintVertical_bias="1.0"
         tools:listitem="@layout/item_film" />
 </androidx.constraintlayout.widget.ConstraintLayout>
