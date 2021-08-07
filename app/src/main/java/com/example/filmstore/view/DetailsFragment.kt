@@ -38,6 +38,11 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA) ?: Film()
+        loadFilm()
+    }
+
+    private fun loadFilm() {
+
     }
 
 }

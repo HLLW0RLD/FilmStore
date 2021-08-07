@@ -43,11 +43,13 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
+
         _binding!!.RecyclerViewList.layoutManager = GridLayoutManager(context, 3)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+
         val observer = Observer<AppState>{renderData(it)}
 
         viewModel.getData().observe(viewLifecycleOwner, observer)
@@ -56,33 +58,9 @@ class ListFragment : Fragment() {
 
         binding.RecyclerViewBest.adapter = adapterBest
 
-        adapter.setOnItemViewClickListener { film ->
-            activity?.supportFragmentManager?.apply {
-                beginTransaction()
-                    .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
-                        putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
-                    }))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
-        }
+        adapter.setOnItemViewClickListener { film -> showDetails(film) }
 
-        adapterBest.setOnItemViewClickListener { film ->
-            activity?.supportFragmentManager?.apply {
-                beginTransaction()
-                    .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
-                        putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
-                    }))
-                    .addToBackStack("")
-                    .commitAllowingStateLoss()
-            }
-        }
-
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        adapterBest.setOnItemViewClickListener { film -> showDetails(film) }
     }
 
     private fun renderData(data: AppState) {
@@ -91,13 +69,6 @@ class ListFragment : Fragment() {
             is AppState.Success -> {
                 val filmData = data.filmData
             }
-        }
-    }
-
-    private fun setData(filmData: Film){
-        with(binding){
-            name.text = filmData.name
-            rating.text = filmData.rating.toString()
         }
     }
 }

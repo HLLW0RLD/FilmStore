@@ -41,6 +41,7 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(), SetOnIte
         fun bind(film: Film) {
             binding.apply {
                 name.text = film.name
+                rating.text = film.rating.toString()
                 root.setOnClickListener {
                     onItemViewClickListener(film)
                 }
