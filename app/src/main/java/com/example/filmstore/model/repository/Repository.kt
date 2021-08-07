@@ -6,6 +6,8 @@ interface Repository {
 
     fun getFilm() : Film
 
+    fun getMyFilms(): List<Film>
+
     fun getBestFilms(): List<Film>
 
     fun getAllFilms(): List<Film>

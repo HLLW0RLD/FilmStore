@@ -14,6 +14,7 @@ import com.example.filmstore.R
 import com.example.filmstore.databinding.FragmentListBinding
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.Film
+import com.example.filmstore.view.Adapter.AdapterBest
 import com.example.filmstore.view.Adapter.AdapterList
 import com.example.filmstore.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.item_film.*
@@ -34,6 +35,8 @@ class ListFragment : Fragment() {
 
     private val adapter = AdapterList()
 
+    private val adapterBest = AdapterBest()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,8 +49,12 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val observer = Observer<AppState>{renderData(it)}
+
         viewModel.getData().observe(viewLifecycleOwner, observer)
+
         binding.RecyclerViewList.adapter = adapter
+
+        binding.RecyclerViewBest.adapter = adapterBest
 
         adapter.setOnItemViewClickListener { film ->
             activity?.supportFragmentManager?.apply {
@@ -60,6 +67,16 @@ class ListFragment : Fragment() {
             }
         }
 
+        adapterBest.setOnItemViewClickListener { film ->
+            activity?.supportFragmentManager?.apply {
+                beginTransaction()
+                    .add(R.id.container, DetailsFragment.newInstance(Bundle().apply {
+                        putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
+                    }))
+                    .addToBackStack("")
+                    .commitAllowingStateLoss()
+            }
+        }
 
     }
 

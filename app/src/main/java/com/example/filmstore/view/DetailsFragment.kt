@@ -11,7 +11,7 @@ import com.example.filmstore.model.Film
 class DetailsFragment : Fragment() {
 
     companion object {
-        const val BUNDLE_EXTRA = "film"
+        const val BUNDLE_EXTRA = "BUNDLE_EXTRA"
 
         fun newInstance(bundle: Bundle): DetailsFragment {
             val fragment = DetailsFragment()
