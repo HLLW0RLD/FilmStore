@@ -1,12 +1,17 @@
 package com.example.filmstore.view
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import com.example.filmstore.databinding.FragmentDetailsBinding
+import com.example.filmstore.model.DTO.FilmDTO
 import com.example.filmstore.model.Film
+import kotlinx.android.synthetic.main.fragment_details.*
+import kotlinx.android.synthetic.main.item_film.*
 
 class DetailsFragment : Fragment() {
 
@@ -35,14 +40,40 @@ class DetailsFragment : Fragment() {
         return binding.root
     }
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA) ?: Film()
-        loadFilm()
-    }
-
-    private fun loadFilm() {
+        filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA)!!
+        val loader = FilmLoader(onLoadListener, filmBundle.name)
+        loader.loadFilm()
 
     }
+
+    private val onLoadListener = object: FilmLoader.FilmLoaderListener{
+        override fun onLoaded(filmDTO: FilmDTO) {
+            displayFilm(filmDTO)
+        }
+
+        override fun onFailed(throwable: Throwable) {
+            // Обработка ошибок
+        }
+    }
+
+    private fun displayFilm(filmDTO: FilmDTO) {
+        with(binding) {
+            filmBundle.also{ film ->
+                name.text = film.name
+
+            }
+
+            filmDTO.fact?.let { fact ->
+                name.text = fact.title
+                genre.text = fact.genre
+                year.text = fact.release
+                description.text = fact.tagline
+            }
+        }
+    }
+
 
 }

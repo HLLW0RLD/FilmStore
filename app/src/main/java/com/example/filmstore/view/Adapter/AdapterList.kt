@@ -7,13 +7,13 @@ import com.example.filmstore.databinding.ItemFilmBinding
 import com.example.filmstore.model.Film
 import com.example.filmstore.model.repository.RepositoryImpl
 
-class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(), SetOnItemViewClickListener {
+class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
 
     private var filmData: List<Film> = RepositoryImpl().getAllFilms()
 
     private var onItemViewClickListener: (Film) -> Unit = {}
 
-    override fun setOnItemViewClickListener(onItemViewClickListener: (Film) -> Unit){
+    fun setOnItemViewClickListener(onItemViewClickListener: (Film) -> Unit){
         this.onItemViewClickListener = onItemViewClickListener
     }
 
@@ -41,6 +41,7 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(), SetOnIte
         fun bind(film: Film) {
             binding.apply {
                 name.text = film.name
+                genre.text = film.genre
                 rating.text = film.rating.toString()
                 root.setOnClickListener {
                     onItemViewClickListener(film)
