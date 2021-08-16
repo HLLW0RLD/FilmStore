@@ -3,9 +3,11 @@ package com.example.filmstore.view.Adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.filmstore.databinding.ItemFilmBinding
 import com.example.filmstore.model.Film
 import com.example.filmstore.model.repository.RepositoryImpl
+
 
 class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
 
@@ -16,6 +18,8 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
     fun setOnItemViewClickListener(onItemViewClickListener: (Film) -> Unit){
         this.onItemViewClickListener = onItemViewClickListener
     }
+
+
 
     fun setFilm(data: List<Film>) {
         filmData = data
@@ -29,6 +33,10 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
 
     override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
         holder.bind(filmData[position])
+
+        Glide.with(holder.binding.icon)
+            .load("https://image.tmdb.org/t/p/w500${filmData.get(position).poster_path}")
+            .into(holder.binding.icon)
     }
 
     override fun getItemCount(): Int {
@@ -40,9 +48,9 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
 
         fun bind(film: Film) {
             binding.apply {
-                name.text = film.name
+                name.text = film.title
                 genre.text = film.genre
-                rating.text = film.rating.toString()
+                date.text = film.release.toString()
                 root.setOnClickListener {
                     onItemViewClickListener(film)
                 }

@@ -58,7 +58,6 @@ class ListFragment : Fragment() {
 
         when(data) {
             is AppState.Success -> {
-                val filmData = data.filmData
                 adapter.setFilm(data.filmData)
             }
         }

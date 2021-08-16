@@ -4,47 +4,22 @@ import com.example.filmstore.model.Film
 
 class RepositoryImpl : Repository{
 
-    override fun getFilm() = Film()
-
-    override fun getMyFilms() = listOf(
-        Film("Film", 7.0, 2020,"text"),
-        Film("Top", 10.0, 2021, "best")
-    )
-
     override fun getAllFilms() = listOf(
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-        Film("Film", 7.0, 2020,"text"),
-    )
-
-    override fun getBestFilms() = listOf(
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
-        Film("Top", 10.0, 2021, "best"),
+        Film(1, "text", "text", "text", "2020", "text"),
+        Film(50, "text", "text", "text",  "2020", "text"),
+        Film(100, "text", "text", "text",  "2020", "text"),
+        Film(767, "text", "text", "text",  "2020", "text"),
+        Film(666, "text", "text", "text",  "2020", "text"),
+        Film(345, "text", "text", "text",  "2020", "text"),
+        Film(20, "text", "text", "text",  "2020", "text"),
+        Film(4683, "text", "text", "text",  "2020", "text"),
+        Film(864, "text", "text", "text",  "2020", "text"),
+        Film(2345, "text", "text", "text", "2020", "text"),
+        Film(34, "text", "text", "text",  "2020", "text"),
+        Film(260, "text", "text", "text",  "2020", "text"),
+        Film(2, "text", "text", "text", "2020", "text"),
+        Film(890, "text", "text", "text",  "2020", "text"),
+        Film(641, "text", "text", "text",  "2020", "text"),
+        Film(7, "text", "text", "text",  "2020", "text"),
     )
 }
