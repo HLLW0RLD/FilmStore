@@ -2,7 +2,9 @@ package com.example.filmstore.view.Adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.filmstore.databinding.ItemFilmBinding
 import com.example.filmstore.model.Film
 import com.example.filmstore.model.repository.RepositoryImpl
@@ -42,9 +44,13 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(film: Film) {
+            Glide
+                .with(binding.root)
+                .load(film.posterPath.toUri())
+                .into(binding.icon)
+
             binding.apply {
                 name.text = film.name
-                genre.text = film.genreIds.toString()
                 date.text = film.year.toString()
                 root.setOnClickListener {
                     onItemViewClickListener(film)

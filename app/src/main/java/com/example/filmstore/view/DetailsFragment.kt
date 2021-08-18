@@ -45,8 +45,6 @@ class DetailsFragment : Fragment() {
             .with(binding.root)
             .load(filmBundle.posterPath.toUri())
             .into(binding.iconDetails)
-       // binding.year.text = "${filmBundle.year.toString()}"
-       // binding.description.text =
 
         return binding.root
     }
