@@ -13,5 +13,4 @@ data class Film(
     val overview: String,
     val year: Int,
     val country: String,
-    val genreIds: List<Int>
 ) : Parcelable

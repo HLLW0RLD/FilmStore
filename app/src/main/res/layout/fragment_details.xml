@@ -1,63 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/black">
+    android:background="@color/design_default_color_on_secondary">
 
-    <ImageView
-        android:id="@+id/icon_details"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="@dimen/icon_margin"/>
-
-    <TextView
-        android:id="@+id/name"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/icon_margin"
-        android:textColor="#FFFFFF"
-        android:textSize="@dimen/name_size"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon_details" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:textColor="#9C27B0"
-        android:textSize="@dimen/rating_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/genre"
-        android:layout_margin="@dimen/icon_margin"
-        app:layout_constraintTop_toBottomOf="@+id/name"/>
+        <ImageView
+            android:id="@+id/icon_details"
+            android:layout_width="@dimen/icon_details_width"
+            android:layout_height="@dimen/icon_details_height"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_margin="@dimen/icon_margin"/>
 
-    <TextView
-        android:textColor="#9C27B0"
-        android:textSize="@dimen/rating_size"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/rating"
-        android:layout_margin="@dimen/icon_margin"
-        app:layout_constraintTop_toBottomOf="@+id/genre"/>
-
-    <TextView
-        android:textColor="#9C27B0"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/year"
-        android:layout_margin="@dimen/icon_margin"
-        app:layout_constraintTop_toBottomOf="@+id/rating"/>
-
-    <TextView
-        android:textColor="#FFFFFF"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/description"
-        android:layout_margin="@dimen/icon_margin"
-        app:layout_constraintTop_toBottomOf="@+id/year"/>
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/icon_margin"
+            android:textColor="#FFFFFF"
+            android:textSize="@dimen/name_size"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon_details" />
 
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <TextView
+            android:textColor="#9C27B0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/year"
+            android:layout_margin="@dimen/icon_margin"
+            app:layout_constraintTop_toBottomOf="@+id/name"/>
+
+        <TextView
+            android:textColor="#9C27B0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/country"
+            android:layout_margin="@dimen/icon_margin"
+            app:layout_constraintTop_toBottomOf="@+id/year"/>
+
+        <TextView
+            android:textColor="#FFFFFF"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/description"
+            android:layout_margin="@dimen/icon_margin"
+            app:layout_constraintTop_toBottomOf="@+id/country"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

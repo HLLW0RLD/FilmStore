@@ -8,4 +8,6 @@
     <dimen name="name_size">35dp</dimen>
     <dimen name="rating_size">25dp</dimen>
     <dimen name="card_margin">5dp</dimen>
+    <dimen name="icon_details_width">300dp</dimen>
+    <dimen name="icon_details_height">450dp</dimen>
 </resources>
