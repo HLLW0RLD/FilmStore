@@ -1,4 +1,3 @@
 package com.example.filmstore.model.DTO
 
-class FactDTO {
-}
+data class FactDTO(val temp: Int?, val feels_like: Int?, val condition: String?)
