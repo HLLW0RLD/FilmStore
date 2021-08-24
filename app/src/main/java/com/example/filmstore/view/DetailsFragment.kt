@@ -9,9 +9,13 @@ import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.filmstore.R
 import com.example.filmstore.databinding.FragmentDetailsBinding
+import com.example.filmstore.model.AppState
 import com.example.filmstore.model.Film
+import com.example.filmstore.viewmodel.DetailsViewModel
 
 class DetailsFragment : Fragment() {
 
@@ -23,6 +27,10 @@ class DetailsFragment : Fragment() {
             fragment.arguments = bundle
             return fragment
         }
+    }
+
+    private val viewModel: DetailsViewModel by lazy {
+        ViewModelProvider(this).get(DetailsViewModel::class.java)
     }
 
     private var _binding: FragmentDetailsBinding? = null
@@ -41,10 +49,6 @@ class DetailsFragment : Fragment() {
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
 
         binding.name.text = filmBundle!!.name
-        Glide
-            .with(binding.root)
-            .load(filmBundle.posterPath.toUri())
-            .into(binding.iconDetails)
 
         return binding.root
     }
@@ -53,17 +57,29 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA)!!
-
-        displayFilm(filmBundle)
+        viewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
+        viewModel.getFilmFromRemoteSource(filmBundle.name)
     }
 
-    private fun displayFilm(film: Film) {
+    private fun renderData(appState: AppState) {
+        when (appState) {
+            is AppState.Success -> {
+                setFilm(appState.filmData[0])
+            }
+        }
+    }
+
+    private fun setFilm(film: Film) {
         with(binding) {
-            filmBundle.also{ film ->
+            filmBundle.let { film ->
                 name.text = film.name
-                year.text = film.year.toString()
-                country.text = film.country
-                description.text = film.overview
+
+                Glide
+                    .with(binding.root)
+                    .load(filmBundle.posterPath.toUri())
+                    .into(binding.iconDetails)
+
+                saveFilm(film)
             }
         }
     }
