@@ -9,9 +9,6 @@ interface LibraryDao {
     @Query("SELECT * FROM LibraryEntity")
     fun all(): List<LibraryEntity>
 
-    @Query("SELECT * FROM LibraryEntity WHERE film LIKE :film")
-    fun getDataByWord(film: String): List<LibraryEntity>
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: LibraryEntity)
 

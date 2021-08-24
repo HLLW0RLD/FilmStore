@@ -10,4 +10,5 @@
     <dimen name="card_margin">5dp</dimen>
     <dimen name="icon_details_width">300dp</dimen>
     <dimen name="icon_details_height">450dp</dimen>
+    <dimen name="button_size">50dp</dimen>
 </resources>

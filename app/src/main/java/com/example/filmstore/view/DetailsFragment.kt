@@ -57,8 +57,30 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA)!!
+
         viewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
+
         viewModel.getFilmFromRemoteSource(filmBundle.name)
+
+        binding.add.setOnClickListener {
+
+            saveFilm(filmBundle)
+        }
+    }
+
+    private fun saveFilm(
+        film : Film
+    ) {
+        viewModel.saveFilmToDB(
+            Film(
+                film.id,
+                film.name,
+                film.posterPath,
+                film.overview,
+                film.year,
+                film.country
+            )
+        )
     }
 
     private fun renderData(appState: AppState) {
@@ -78,8 +100,6 @@ class DetailsFragment : Fragment() {
                     .with(binding.root)
                     .load(filmBundle.posterPath.toUri())
                     .into(binding.iconDetails)
-
-                saveFilm(film)
             }
         }
     }

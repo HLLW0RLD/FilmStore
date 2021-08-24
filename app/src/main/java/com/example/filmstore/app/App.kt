@@ -33,7 +33,7 @@ class App : Application() {
                     }
                 }
             }
-            return db!!.libraryDao()
+            return db!!.LibraryDao()
         }
     }
 }

@@ -3,32 +3,32 @@ package com.example.filmstore.viewmodel
 import android.telecom.Call
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.example.filmstore.app.App.Companion.getLibraryDao
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.DTO.FactDTO
-import com.example.filmstore.model.DTO.FilmDTO
 import com.example.filmstore.model.Film
-import com.example.filmstore.model.repository.DetailsRepository
-import com.example.filmstore.model.repository.DetailsRepositoryImpl
+import com.example.filmstore.model.convertDtoToModel
+import com.example.filmstore.model.repository.*
 import okhttp3.Response
 import java.io.IOException
 import javax.security.auth.callback.Callback
+import com.example.filmstore.model.DTO.FilmDTO as FilmDTO
 
 private const val SERVER_ERROR = "Ошибка сервера"
 private const val REQUEST_ERROR = "Ошибка запроса на сервер"
-private const val CORRUPTED_DATA = "Неполные данные"
 
 class DetailsViewModel(
     val detailsLiveData: MutableLiveData<AppState> = MutableLiveData(),
     private val detailsRepository: DetailsRepository = DetailsRepositoryImpl(RemoteDataSource()),
-    private val historyRepository: LocalRepository = LocalRepositoryImpl(getHistoryDao())
+    private val libraryRepository: LocalRepository = LocalRepositoryImpl(getLibraryDao())
 ) : ViewModel() {
 
     fun getFilmFromRemoteSource(name : String) {
-        detailsRepository.getFilmDetailsFromServer(name, callBack)
+        detailsRepository.getFilmDetailsFromServer(name, callback)
     }
 
     fun saveFilmToDB(film : Film) {
-        historyRepository.saveEntity(film)
+        libraryRepository.saveEntity(film)
     }
 
     private val callBack = object : Callback<FilmDTO> {
@@ -51,11 +51,6 @@ class DetailsViewModel(
     }
 
     fun checkResponse(serverResponse: FilmDTO): AppState {
-        val fact: FactDTO? = serverResponse.fact
-        return if (fact?.temp == null || fact.feels_like == null || fact.condition.isNullOrEmpty()) {
-            AppState.Error(Throwable(CORRUPTED_DATA))
-        } else {
-            AppState.Success(convertDtoToModel(serverResponse))
+          return  AppState.Success(convertDtoToModel(serverResponse))
         }
     }
-}

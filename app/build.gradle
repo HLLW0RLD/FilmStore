@@ -36,14 +36,6 @@ android {
         viewBinding true
     }
 
-    buildTypes.each {
-        Properties properties = new Properties()
-
-        properties.load(project.rootProject.file("local.properties").newDataInputStream())
-        def apiKey = properties.getProperty("film_api_key", "")
-        it.buildConfigField "String", "FILM_API_KEY", apiKey
-    }
-
     dependencies {
 
         implementation 'androidx.room:room-runtime:2.3.0'

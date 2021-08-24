@@ -12,5 +12,5 @@ data class Film(
     val posterPath: String,
     val overview: String,
     val year: Int,
-    val country: String,
+    val country: String
 ) : Parcelable

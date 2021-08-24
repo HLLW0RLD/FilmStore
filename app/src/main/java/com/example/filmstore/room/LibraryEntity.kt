@@ -4,12 +4,15 @@ import androidx.room.*
 
 const val ID = "id"
 const val NAME = "name"
-const val FILM = "film"
+
 
 @Entity
 data class LibraryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
-    val film: String = "",
-    val name: String = ""
+    val id: Int,
+    val name: String,
+    val posterPath: String,
+    val overview: String,
+    val year: Int,
+    val country: String
 )
