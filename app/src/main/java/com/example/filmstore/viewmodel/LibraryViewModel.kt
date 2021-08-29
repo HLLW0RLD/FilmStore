@@ -14,6 +14,6 @@ class LibraryViewModel(
 
     fun getAllHistory(){
         libraryLiveData.value = AppState.Loading
-        libraryLiveData.value = AppState.Success(libraryRepository.getAllHistory())
+        libraryLiveData.value = AppState.Success(libraryRepository.getAllLibrary())
     }
 }

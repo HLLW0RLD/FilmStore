@@ -1,18 +1,19 @@
 package com.example.filmstore.viewmodel
 
-import android.telecom.Call
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.filmstore.app.App.Companion.getLibraryDao
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.DTO.FactDTO
+import com.example.filmstore.model.DTO.FilmDTO
 import com.example.filmstore.model.Film
 import com.example.filmstore.model.convertDtoToModel
 import com.example.filmstore.model.repository.*
-import okhttp3.Response
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.IOException
-import javax.security.auth.callback.Callback
-import com.example.filmstore.model.DTO.FilmDTO as FilmDTO
 
 private const val SERVER_ERROR = "Ошибка сервера"
 private const val REQUEST_ERROR = "Ошибка запроса на сервер"
@@ -23,8 +24,8 @@ class DetailsViewModel(
     private val libraryRepository: LocalRepository = LocalRepositoryImpl(getLibraryDao())
 ) : ViewModel() {
 
-    fun getFilmFromRemoteSource(name : String) {
-        detailsRepository.getFilmDetailsFromServer(name, callback)
+    fun getFilmFromRemoteSource(id: Int) {
+        detailsRepository.getFilmDetailsFromServer(id, callBack)
     }
 
     fun saveFilmToDB(film : Film) {
@@ -51,6 +52,7 @@ class DetailsViewModel(
     }
 
     fun checkResponse(serverResponse: FilmDTO): AppState {
+        val fact : FactDTO? = serverResponse.fact
           return  AppState.Success(convertDtoToModel(serverResponse))
         }
     }

@@ -17,3 +17,21 @@ fun Fragment.showDetails(film: Film){
             .commitAllowingStateLoss()
     }
 }
+
+fun Fragment.showList() {
+    activity?.supportFragmentManager?.apply {
+        beginTransaction()
+            .replace(R.id.container, ListFragment.newInstance())
+            .addToBackStack("")
+            .commitAllowingStateLoss()
+    }
+}
+
+fun Fragment.showLibrary(){
+    activity?.supportFragmentManager?.apply {
+        beginTransaction()
+            .replace(R.id.container, LibraryFragment.newInstance())
+            .addToBackStack("")
+            .commitAllowingStateLoss()
+    }
+}

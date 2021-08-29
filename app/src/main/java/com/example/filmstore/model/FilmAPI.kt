@@ -12,6 +12,6 @@ interface FilmAPI {
     @GET("v2/informers")
     fun getFilm(
         @Header(FILM_API_KEY) token: String,
-        @Query("name") name: String,
+        @Query("name") id: Int,
     ): Call<FilmDTO>
 }

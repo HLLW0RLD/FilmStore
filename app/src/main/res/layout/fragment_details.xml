@@ -69,7 +69,7 @@
             app:layout_constraintTop_toBottomOf="@+id/country"/>
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottomNavigationView2"
+            android:id="@+id/bottomNavigationView"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:background="#540063"

@@ -1,6 +1,5 @@
 package com.example.filmstore.model.repository
 
-import com.example.filmstore.BuildConfig
 import com.example.filmstore.model.DTO.FilmDTO
 import com.example.filmstore.model.FilmAPI
 import com.google.gson.GsonBuilder
@@ -20,7 +19,7 @@ class RemoteDataSource {
             )
         ).build().create(FilmAPI::class.java)
 
-    fun getFilmDetails(name : String, callback: Callback<FilmDTO>) {
-        filmAPI.getFilm(FILM_API_KEY, name).enqueue(callback)
+    fun getFilmDetails(id : Int, callback: Callback<FilmDTO>) {
+        filmAPI.getFilm(FILM_API_KEY, id).enqueue(callback)
     }
 }

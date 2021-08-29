@@ -5,17 +5,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.filmstore.R
 import com.example.filmstore.databinding.FragmentDetailsBinding
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.Film
 import com.example.filmstore.viewmodel.DetailsViewModel
+
+private const val IMAGE_URL = "http://image.tmdb.org/t/p/w500/"
 
 class DetailsFragment : Fragment() {
 
@@ -60,7 +60,7 @@ class DetailsFragment : Fragment() {
 
         viewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
 
-        viewModel.getFilmFromRemoteSource(filmBundle.name)
+        viewModel.getFilmFromRemoteSource(filmBundle.id)
 
         binding.add.setOnClickListener {
 
@@ -98,7 +98,7 @@ class DetailsFragment : Fragment() {
 
                 Glide
                     .with(binding.root)
-                    .load(filmBundle.posterPath.toUri())
+                    .load(IMAGE_URL + filmBundle.posterPath)
                     .into(binding.iconDetails)
             }
         }

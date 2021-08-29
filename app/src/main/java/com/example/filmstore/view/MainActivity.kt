@@ -7,6 +7,9 @@ import android.view.MenuItem
 import com.example.filmstore.R
 import com.example.filmstore.databinding.ActivityMainBinding
 import com.example.filmstore.view.DetailsFragment.Companion.newInstance
+import kotlinx.android.synthetic.main.fragment_list.*
+import java.lang.Exception
+import java.security.cert.Extension
 
 class MainActivity : AppCompatActivity() {
 
@@ -17,40 +20,44 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(binding.container.id, ListFragment.newInstance())
                 .commitNow()
+
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
+//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+//        menuInflater.inflate(R.menu.main_menu, menu)
+//        return super.onCreateOptionsMenu(menu)
+//    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        return when (item.itemId) {
+//            R.id.library -> {
+//                supportFragmentManager.apply {
+//                    beginTransaction()
+//                        .replace(R.id.container, LibraryFragment.newInstance())
+//                        .addToBackStack("")
+//                        .commitAllowingStateLoss()
+//                }
+//                true
+//            }
+//            R.id.films -> {
+//                supportFragmentManager?.apply {
+//                    beginTransaction()
+//                        .replace(R.id.container, ListFragment.newInstance())
+//                        .addToBackStack("")
+//                        .commitAllowingStateLoss()
+//                }
+//                true
+//            }
+//
+//            else -> super.onOptionsItemSelected(item)
+//        }
+//    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.library -> {
-                supportFragmentManager.apply {
-                    beginTransaction()
-                        .add(R.id.container, LibraryFragment.newInstance())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
-                true
-            }
-            R.id.films -> {
-                supportFragmentManager.apply {
-                    beginTransaction()
-                        .add(R.id.container, ListFragment.newInstance())
-                        .addToBackStack("")
-                        .commitAllowingStateLoss()
-                }
-                true
-            }
-
-            else -> super.onOptionsItemSelected(item)
-        }
-    }
 }
