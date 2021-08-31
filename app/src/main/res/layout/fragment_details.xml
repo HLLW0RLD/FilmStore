@@ -1,72 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/design_default_color_on_secondary">
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+
+<androidx.core.widget.NestedScrollView
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <Button
-            android:id="@+id/add"
-            android:layout_width="58dp"
-            android:layout_height="64dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginEnd="4dp"
-            android:background="@color/black"
-            android:text="@string/add"
-            app:icon="@android:drawable/btn_star_big_on"
-            app:iconTint="#9E68FF"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/icon_details"
-            android:layout_width="@dimen/icon_details_width"
-            android:layout_height="@dimen/icon_details_height"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_margin="@dimen/icon_margin"/>
+        android:layout_height="wrap_content">
 
         <TextView
             android:id="@+id/name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/icon_margin"
-            android:textColor="#FFFFFF"
-            android:textSize="@dimen/name_size"
+            android:layout_margin="@dimen/card_margin"
+            android:gravity="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/icon_details" />
+            app:layout_constraintTop_toTopOf="parent" />
 
-
-        <TextView
-            android:textColor="#9C27B0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/year"
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="@dimen/icon_details_width"
+            android:layout_height="@dimen/icon_details_height"
             android:layout_margin="@dimen/icon_margin"
-            app:layout_constraintTop_toBottomOf="@+id/name"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/name"/>
 
         <TextView
-            android:textColor="#9C27B0"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/country"
-            android:layout_margin="@dimen/icon_margin"
-            app:layout_constraintTop_toBottomOf="@+id/year"/>
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@+id/year" />
 
         <TextView
-            android:textColor="#FFFFFF"
+            android:id="@+id/year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margine"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@id/name" />
+
+        <TextView
+            android:id="@+id/genre"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@id/country" />
+
+        <TextView
+            android:id="@+id/budget"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@id/genre" />
+
+        <TextView
+            android:id="@+id/rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/description"
-            android:layout_margin="@dimen/icon_margin"
-            app:layout_constraintTop_toBottomOf="@+id/country"/>
+            android:layout_margin="@dimen/details_margine"
+            app:layout_constraintTop_toBottomOf="@id/icon"/>
+
+        <TextView
+            android:id="@+id/overview"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/details_margine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/bottomNavigationView"
+            app:layout_constraintTop_toBottomOf="@id/rating" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottomNavigationView"
@@ -77,9 +94,10 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/year"
+            app:layout_constraintTop_toBottomOf="parent"
             app:layout_constraintVertical_bias="1.0"
             app:menu="@menu/main_menu" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
+</FrameLayout>

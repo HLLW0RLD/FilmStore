@@ -4,20 +4,25 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.filmstore.R
 import com.example.filmstore.databinding.FragmentListBinding
 import com.example.filmstore.model.AppState
+import com.example.filmstore.model.DTO.GenreDTO
+import com.example.filmstore.model.Film
 import com.example.filmstore.view.Adapter.AdapterList
 import com.example.filmstore.viewmodel.MainViewModel
-import kotlinx.android.synthetic.main.item_film.*
+import com.google.android.material.textview.MaterialTextView
+import kotlinx.android.synthetic.main.fragment_list.view.*
 
 class ListFragment : Fragment() {
 
-    companion object{
+    companion object {
         fun newInstance() = ListFragment()
     }
 
@@ -25,11 +30,21 @@ class ListFragment : Fragment() {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
+    private var genresList: List<GenreDTO> = listOf()
+
+    private val adaptersByGenre: MutableList<AdapterList> = mutableListOf()
+
+    private val titlesGenre: MutableList<MaterialTextView> = mutableListOf()
+
     private var _binding: FragmentListBinding? = null
 
     private val binding get() = _binding!!
 
     private val adapter = AdapterList()
+
+    interface OnFilmClickListener {
+        fun onFilmClick(film: Film)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,43 +53,87 @@ class ListFragment : Fragment() {
     ): View {
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
-        _binding!!.RecyclerViewList.layoutManager = GridLayoutManager(context, 3)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val observer = Observer<AppState>{renderData(it)}
+        viewModel.getLiveData().observe(viewLifecycleOwner, {
+            renderData(it)
+        })
+        viewModel.getListFilmFromRemote(null)
 
-        viewModel.getData().observe(viewLifecycleOwner, observer)
-
-        binding.RecyclerViewList.adapter = adapter
-
-        adapter.setOnItemViewClickListener { film -> showDetails(film) }
-
-        binding.bottomNavigationView.setOnClickListener {
-            when(it.id){
-                R.id.library ->{
-                    showLibrary()
-                    true
-                }
-                R.id.films ->{
-                    showList()
-                    true
-                }
-            }
-        }
+        binding.RecyclerViewBest.adapter = adapter
 
     }
 
-    private fun renderData(data: AppState) {
-
-        when(data) {
-            is AppState.Success -> {
-                val filmData = data.filmData
-                adapter.setFilm(data.filmData)
-            }
+    private val filmClickListener = object : OnFilmClickListener {
+        override fun onFilmClick(film: Film) {
+            val manager = parentFragmentManager
+            val bundle = Bundle()
+            bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, film)
+            manager
+                .beginTransaction()
+                .replace(R.id.container, DetailsFragment.newInstance(bundle))
+                .addToBackStack(DetailsFragment.BUNDLE_EXTRA)
+                .commit()
         }
     }
 
+    private fun renderData(state: AppState) {
+        when (state) {
+            is AppState.SuccessOnListByGenre -> {
+                for (genre in genresList) {
+                    if (genre.id == state.genreID) {
+                        val index = genresList.indexOf(genre)
+                        adaptersByGenre[index].setFilmData(state.listFilms)
+                        adaptersByGenre[index].setFilmListener(filmClickListener)
+                        if (genre != genresList.last()) {
+                            viewModel.getListFilmFromRemote(genresList[index + 1].id.toString())
+                        }
+                    }
+                }
+            }
+            is AppState.SuccessOnList -> {
+                adapter.setFilmData(state.listFilms)
+                adapter.setFilmListener(filmClickListener)
+                binding.RecyclerViewBest.adapter = adapter
+                binding.RecyclerViewBest.layoutManager =
+                    LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                viewModel.getGenresListFromRemote()
+            }
+            is AppState.SuccessOnGenres -> {
+                for (genre in state.genres) {
+                    genresList = state.genres
+                    val index = state.genres.indexOf(genre)
+                    titlesGenre.add(
+                        MaterialTextView(binding.listsContainer.context).apply {
+                            text = genre.name?.replaceFirstChar { it.uppercase() }
+                            layoutParams = binding.listsContainer.layoutParams
+                        }
+                    )
+                    adaptersByGenre.add(
+                        AdapterList()
+                    )
+                    with(binding.listsContainer) {
+                        addView(titlesGenre[index])
+                        addView(RecyclerView(context).apply {
+                            adapter = adaptersByGenre[index]
+                            layoutManager =
+                                LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+                        })
+                    }
+                }
+                viewModel.getListFilmFromRemote(state.genres.first().id.toString())
+            }
+            is AppState.Error -> {
+                Toast.makeText(
+                    context,
+                    "Ошибка загрузки данных. Попробуем ещё раз",
+                    Toast.LENGTH_SHORT
+                ).show()
+                viewModel.getListFilmFromRemote(null)
+            }
+        }
+    }
 }

@@ -7,9 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.filmstore.databinding.FragmentLibraryBinding
-import com.example.filmstore.model.AppState
 import com.example.filmstore.view.Adapter.AdapterLibrary
-import com.example.filmstore.viewmodel.LibraryViewModel
+import com.example.filmstore.viewmodel.MainViewModel
 
 class LibraryFragment: Fragment() {
 
@@ -17,9 +16,9 @@ class LibraryFragment: Fragment() {
 
     private val binding get() = _binding!!
 
-    private val viewModel: LibraryViewModel by lazy {
-        ViewModelProvider(this).get(LibraryViewModel::class.java)
-    }
+    private val viewModel: MainViewModel by lazy {
+      ViewModelProvider(this).get(MainViewModel::class.java)
+   }
 
     private val adapter: AdapterLibrary by lazy {
         AdapterLibrary()
@@ -43,22 +42,16 @@ class LibraryFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.RecyclerViewLibrary.adapter = adapter
-        viewModel.libraryLiveData.observe(viewLifecycleOwner) { renderData(it) }
-        viewModel.getAllHistory()
+        viewModel.getLiveData().observe(viewLifecycleOwner) { //renderData(it) }
+            
 
-        adapter.setOnItemViewClickListener { film -> showDetails(film) }
-    }
+            adapter.setOnItemViewClickListener { film -> showDetails(film) }
+        }
+  }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                adapter.setData(appState.filmData)
-            }
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
         }
     }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
-}

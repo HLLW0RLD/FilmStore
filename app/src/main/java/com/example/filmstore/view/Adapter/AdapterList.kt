@@ -7,24 +7,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.filmstore.databinding.ItemFilmBinding
 import com.example.filmstore.model.Film
-import com.example.filmstore.model.repository.RepositoryImpl
+import com.example.filmstore.view.ListFragment
 
 
 class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
 
-    private var filmData: List<Film> = RepositoryImpl().getAllFilms()
+    private var filmData: List<Film> = listOf()
 
-    private var onItemViewClickListener: (Film) -> Unit = {}
+    private var onFilmClickListener: ListFragment.OnFilmClickListener? = null
 
-    fun setOnItemViewClickListener(onItemViewClickListener: (Film) -> Unit){
-        this.onItemViewClickListener = onItemViewClickListener
+    fun setFilmData(newFilmData: List<Film>) {
+        this.filmData = newFilmData
+        notifyDataSetChanged()
     }
 
-
-
-    fun setFilm(data: List<Film>) {
-        filmData = data
-        notifyDataSetChanged()
+    fun setFilmListener(onFilmClickListener: ListFragment.OnFilmClickListener?) {
+        this.onFilmClickListener = onFilmClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
@@ -53,7 +51,7 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
                 name.text = film.name
                 date.text = film.year.toString()
                 root.setOnClickListener {
-                    onItemViewClickListener(film)
+                    onFilmClickListener?.onFilmClick(film)
                 }
             }
         }

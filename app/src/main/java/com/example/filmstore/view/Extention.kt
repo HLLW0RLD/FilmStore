@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.example.filmstore.R
 import com.example.filmstore.model.Film
+import java.util.*
 
 
 fun Fragment.showDetails(film: Film){
@@ -18,20 +19,7 @@ fun Fragment.showDetails(film: Film){
     }
 }
 
-fun Fragment.showList() {
-    activity?.supportFragmentManager?.apply {
-        beginTransaction()
-            .replace(R.id.container, ListFragment.newInstance())
-            .addToBackStack("")
-            .commitAllowingStateLoss()
-    }
-}
-
-fun Fragment.showLibrary(){
-    activity?.supportFragmentManager?.apply {
-        beginTransaction()
-            .replace(R.id.container, LibraryFragment.newInstance())
-            .addToBackStack("")
-            .commitAllowingStateLoss()
-    }
+fun getDate(dateInString: String) {
+    var date: Date = Date()
+    val year = dateInString.substringBefore("-")
 }

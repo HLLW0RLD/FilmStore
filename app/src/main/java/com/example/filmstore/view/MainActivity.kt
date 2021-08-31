@@ -5,8 +5,11 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import com.example.filmstore.R
+import com.example.filmstore.R.id.*
 import com.example.filmstore.databinding.ActivityMainBinding
+import com.example.filmstore.databinding.FragmentMainBinding
 import com.example.filmstore.view.DetailsFragment.Companion.newInstance
+import com.google.android.material.bottomnavigation.BottomNavigationMenuView
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.lang.Exception
 import java.security.cert.Extension
@@ -15,9 +18,12 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private var bindingGeneral: FragmentMainBinding? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        bindingGeneral = FragmentMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 
@@ -28,36 +34,25 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
 
         }
+
+
+        bindingGeneral!!.bottomNavigationView.also{bottomNavigation ->
+            bottomNavigation.setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    films -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(container_general, ListFragment.newInstance())
+                            .commitNow()
+                    }
+                    library -> {
+                        supportFragmentManager.beginTransaction()
+                            .replace(container_general, LibraryFragment.newInstance())
+                            .commitNow()
+                    }
+                }
+                true
+            }
+        }
+
     }
-
-//    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.main_menu, menu)
-//        return super.onCreateOptionsMenu(menu)
-//    }
-//
-//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        return when (item.itemId) {
-//            R.id.library -> {
-//                supportFragmentManager.apply {
-//                    beginTransaction()
-//                        .replace(R.id.container, LibraryFragment.newInstance())
-//                        .addToBackStack("")
-//                        .commitAllowingStateLoss()
-//                }
-//                true
-//            }
-//            R.id.films -> {
-//                supportFragmentManager?.apply {
-//                    beginTransaction()
-//                        .replace(R.id.container, ListFragment.newInstance())
-//                        .addToBackStack("")
-//                        .commitAllowingStateLoss()
-//                }
-//                true
-//            }
-//
-//            else -> super.onOptionsItemSelected(item)
-//        }
-//    }
-
 }

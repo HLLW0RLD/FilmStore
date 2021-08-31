@@ -6,16 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.example.filmstore.databinding.FragmentDetailsBinding
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.Film
-import com.example.filmstore.viewmodel.DetailsViewModel
-
-private const val IMAGE_URL = "http://image.tmdb.org/t/p/w500/"
+import com.example.filmstore.viewmodel.MainViewModel
+import java.time.format.DateTimeFormatter
 
 class DetailsFragment : Fragment() {
 
@@ -29,78 +27,62 @@ class DetailsFragment : Fragment() {
         }
     }
 
-    private val viewModel: DetailsViewModel by lazy {
-        ViewModelProvider(this).get(DetailsViewModel::class.java)
+    private val viewModel: MainViewModel by lazy {
+        ViewModelProvider(this).get(MainViewModel::class.java)
     }
 
     private var _binding: FragmentDetailsBinding? = null
 
     private val binding get() = _binding!!
 
-    private lateinit var filmBundle: Film
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View{
-        val filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA)
+    ): View {
+
+        viewModel.getLiveData().observe(viewLifecycleOwner, { renderData(it) })
+
+        arguments?.getParcelable<Film>(BUNDLE_EXTRA)?.let { viewModel.getFilmDetailFromRemote(it) }
 
         _binding = FragmentDetailsBinding.inflate(inflater, container, false)
-
-        binding.name.text = filmBundle!!.name
 
         return binding.root
     }
 
-    @RequiresApi(Build.VERSION_CODES.N)
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        filmBundle = arguments?.getParcelable<Film>(BUNDLE_EXTRA)!!
 
-        viewModel.detailsLiveData.observe(viewLifecycleOwner) { renderData(it) }
-
-        viewModel.getFilmFromRemoteSource(filmBundle.id)
-
-        binding.add.setOnClickListener {
-
-            saveFilm(filmBundle)
-        }
     }
 
-    private fun saveFilm(
-        film : Film
-    ) {
-        viewModel.saveFilmToDB(
-            Film(
-                film.id,
-                film.name,
-                film.posterPath,
-                film.overview,
-                film.year,
-                film.country
-            )
-        )
-    }
 
-    private fun renderData(appState: AppState) {
-        when (appState) {
-            is AppState.Success -> {
-                setFilm(appState.filmData[0])
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun renderData(state: AppState) {
+        when (state) {
+            is AppState.SuccessOnFilm -> {
+                val film = state.filmDetail
+                val dateFormatter = DateTimeFormatter.ofPattern("d LLLL yyyy")
+                binding.apply {
+                    name.text = film.name
+                    Glide
+                        .with(root)
+                        .load(film.posterPath)
+                        .into(icon)
+                    country.text = film.countries
+                    year.text = "Премьера: ${film.releaseDate.format(dateFormatter)}"
+                    genre.text = film.genres
+                    overview.text = film.overview
+                    budget.text = String.format("Бюджет: %d $", film.budget)
+                    rating.text = String.format("Рейтинг: %.1f", film.voteAverage)
+                }
             }
         }
     }
-
-    private fun setFilm(film: Film) {
-        with(binding) {
-            filmBundle.let { film ->
-                name.text = film.name
-
-                Glide
-                    .with(binding.root)
-                    .load(IMAGE_URL + filmBundle.posterPath)
-                    .into(binding.iconDetails)
-            }
-        }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
+
