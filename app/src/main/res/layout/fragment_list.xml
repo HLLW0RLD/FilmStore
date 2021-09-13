@@ -19,7 +19,6 @@
                 android:orientation="vertical"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
             <TextView
                 android:background="#540063"
                 android:layout_margin="@dimen/card_margin"
@@ -29,6 +28,12 @@
                 android:textSize="@dimen/title_size"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Headline5" />
 
+                <View
+                    android:id="@+id/line1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/list_line"
+                    android:background="#6A027C"
+                    app:layout_constraintTop_toBottomOf="@+id/library_title"/>
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/RecyclerView_best"
@@ -38,12 +43,6 @@
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_film"/>
-
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/list_line"
-                    android:background="#6A027C"/>
 
             </LinearLayout>
 

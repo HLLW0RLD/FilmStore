@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
                 when (item.itemId) {
                     films -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(container_general, ListFragment.newInstance())
+                            .replace(bindingGeneral!!.containerGeneral.id, ListFragment.newInstance())
                             .commitNow()
                     }
                     library -> {
                         supportFragmentManager.beginTransaction()
-                            .replace(container_general, LibraryFragment.newInstance())
+                            .replace(bindingGeneral!!.containerGeneral.id, LibraryFragment.newInstance())
                             .commitNow()
                     }
                 }

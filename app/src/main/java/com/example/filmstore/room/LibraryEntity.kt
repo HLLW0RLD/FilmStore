@@ -9,10 +9,9 @@ const val NAME = "name"
 @Entity
 data class LibraryEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    val id: Long,
     val name: String,
     val posterPath: String,
-    val overview: String,
-    val year: Int,
-    val country: String
+    val voteAverage: Double,
+    val releaseDate: Long,
 )

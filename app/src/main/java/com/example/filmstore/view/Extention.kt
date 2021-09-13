@@ -19,7 +19,3 @@ fun Fragment.showDetails(film: Film){
     }
 }
 
-fun getDate(dateInString: String) {
-    var date: Date = Date()
-    val year = dateInString.substringBefore("-")
-}

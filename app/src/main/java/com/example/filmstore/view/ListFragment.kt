@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,6 +18,7 @@ import com.example.filmstore.view.Adapter.AdapterList
 import com.example.filmstore.viewmodel.MainViewModel
 import com.google.android.material.textview.MaterialTextView
 import kotlinx.android.synthetic.main.fragment_list.view.*
+
 
 class ListFragment : Fragment() {
 
@@ -51,6 +51,7 @@ class ListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
         return binding.root
@@ -135,5 +136,14 @@ class ListFragment : Fragment() {
                 viewModel.getListFilmFromRemote(null)
             }
         }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        adapter::removeListener
+        for (adapter in adaptersByGenre) {
+            adapter::removeListener
+        }
+        binding.listsContainer.removeAllViews()
+        _binding = null
     }
 }

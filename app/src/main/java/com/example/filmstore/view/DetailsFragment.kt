@@ -9,9 +9,12 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.filmstore.app.App
 import com.example.filmstore.databinding.FragmentDetailsBinding
 import com.example.filmstore.model.AppState
 import com.example.filmstore.model.Film
+import com.example.filmstore.model.repository.LocalRepository
+import com.example.filmstore.model.repository.LocalRepositoryImpl
 import com.example.filmstore.viewmodel.MainViewModel
 import java.time.format.DateTimeFormatter
 
@@ -27,6 +30,8 @@ class DetailsFragment : Fragment() {
         }
     }
 
+    private val filmLocalRepository: LocalRepository = LocalRepositoryImpl(App.getLibraryDao())
+
     private val viewModel: MainViewModel by lazy {
         ViewModelProvider(this).get(MainViewModel::class.java)
     }
@@ -34,6 +39,8 @@ class DetailsFragment : Fragment() {
     private var _binding: FragmentDetailsBinding? = null
 
     private val binding get() = _binding!!
+
+    private lateinit var filmBundle: Film
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
@@ -55,8 +62,11 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-    }
+        binding.add.setOnClickListener {
 
+            filmLocalRepository.saveEntity(filmBundle)
+        }
+    }
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun renderData(state: AppState) {

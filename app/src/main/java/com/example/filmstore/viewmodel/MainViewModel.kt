@@ -3,7 +3,6 @@ package com.example.filmstore.viewmodel
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.filmstore.model.AppState
@@ -12,11 +11,9 @@ import com.example.filmstore.model.Film
 import com.example.filmstore.model.FilmDetail
 import com.example.filmstore.model.RemoteDataSource.RemoteDataSource
 import com.example.filmstore.model.repository.RemoteRepository
-import com.example.filmstore.model.repository.Repository
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.lang.Thread.sleep
 import java.time.LocalDate
 
 private const val SERVER_ERROR = "Ошибка загрузки данных"

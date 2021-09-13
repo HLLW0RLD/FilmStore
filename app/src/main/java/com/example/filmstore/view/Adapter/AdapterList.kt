@@ -25,6 +25,10 @@ class AdapterList : RecyclerView.Adapter<AdapterList.MainViewHolder>(){
         this.onFilmClickListener = onFilmClickListener
     }
 
+    fun removeListener() {
+        onFilmClickListener = null
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
         val binding = ItemFilmBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return MainViewHolder(binding)

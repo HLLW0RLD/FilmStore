@@ -1,7 +1,6 @@
 package com.example.filmstore.model
 
 
-import android.os.Parcel
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -11,5 +10,5 @@ data class Film(
     val name: String,
     val posterPath: String,
     val voteAverage: Double,
-    val year: Int
+    val releaseDate: Long
 ) : Parcelable

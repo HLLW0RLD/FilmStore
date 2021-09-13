@@ -6,8 +6,14 @@ import androidx.room.*
 
 @Dao
 interface LibraryDao {
-    @Query("SELECT * FROM LibraryEntity")
+    @Query("SELECT * FROM LibraryEntity ORDER BY LibraryEntity.time DESC")
     fun all(): List<LibraryEntity>
+
+    @Query("SELECT * FROM LibraryEntity WHERE name LIKE :name")
+    fun getDataByWord(name: String): List<LibraryEntity>
+
+    @Query("DELETE FROM LibraryEntity")
+    fun deleteAll()
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(entity: LibraryEntity)
@@ -18,12 +24,4 @@ interface LibraryDao {
     @Delete
     fun delete(entity: LibraryEntity)
 
-    @Query("DELETE FROM LibraryEntity WHERE id = :id")
-    fun deleteById(id: Long)
-
-    @Query("SELECT id, name FROM LibraryEntity")
-    fun getLibraryCursor(): Cursor
-
-    @Query("SELECT id, name FROM LibraryEntity WHERE id = :id")
-    fun getLibraryCursor(id: Long): Cursor
 }
